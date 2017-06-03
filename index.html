@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>数字小中南</title>
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./font/iconfont.css">
+  </head>
+  <body>
+    <div class="maincontent">
+    <!--<div class="titlebar">
+      <div class="min">
+        <i class="iconfont icon-min"></i>
+      </div>
+      <div class="max">
+        <i class="iconfont icon-PC-max"></i>
+      </div>
+      <div class="closeWin">
+        <i class="iconfont icon-guanbifuzhi"></i>
+      </div>
+    </div>-->
+    <div class="main-body">
+      <canvas class="back-canvas"></canvas>
+      <div class="menu">
+        <i class="iconfont icon-iconfont-edu12"></i>
+      </div>
+      <div class="menuspan">
+        <div class="closemenu">
+          <i class="iconfont icon-guanbifuzhi"></i>
+        </div>
+        <div class="setlogo">
+          <div class="logowrap">
+            <i class="iconfont icon-iconziti09"></i>
+          </div>
+        </div>
+        <div class="tools">
+          <i class="iconfont icon-tools"></i>
+        </div>
+        <div class="menulist">
+          <div class="t-autoRelogin">
+            <span>定时重连</span>
+            <label class="mui-switch">
+                <input type="checkbox" class="chk_4 js-chk js-autoRelogin hidden"  autocomplete="off"><i class="judge-switch"></i>
+            </label>
+          </div>
+          <div class="t-autoLogin">
+            <span>自动登录</span>
+            <label class="mui-switch">
+                <input type="checkbox" class="chk_4 js-chk js-autoLogin hidden"  autocomplete="off"><i class="judge-switch"></i>
+            </label>
+          </div>
+          <div class="t-reConnect">
+            <span>掉线重连</span>
+            <label class="mui-switch">
+                <input type="checkbox" class="chk_4 js-chk js-reConnect hidden"  autocomplete="off"><i class="judge-switch"></i>
+            </label>
+          </div>
+          <div class="t-cost" style="padding: 9px 0;">
+            <span>费用信息</span>
+          </div>
+          <div class="t-payment" style="padding: 9px 0;">
+            <span>网上缴费</span>
+          </div>
+          <div class="t-back" style="padding: 9px 0;">
+            <span>提交反馈</span>
+          </div>
+          <div class="t-aboutAuthor" style="padding: 9px 0;">
+            <span>关于作者</span>
+          </div>
+        </div>
+      </div>
+      <div class="main-wrap">
+      <div class="login-pane">
+        <div class="logo">
+        <img src="./file/logos.png" alt="">
+      </div>
+        <input id="account" placeholder="账号（01+学生号）" type="text" class="ant-input" placeholder="account">
+        <input id="password" placeholder="密码（通常为6位）" type="password" class="ant-input" placeholder="password">
+        <button id="login" class="button is-primary ant-btn">登录</button>
+      </div>
+      <div class="success-pane">
+          <div class="logo">
+            <div class="iconwrap">
+            <i class="iconfont icon-chenggong2"></i>
+            </div>
+          </div>
+          <span class="timer" style="
+              font-size: 16px;
+              text-align: center;
+              color: #616161;
+              margin-top: -21px;
+              display:block;
+          ">已登录</span>
+          <div class="account-info">
+            <div class="uname">账号：<span></span></div>
+            <div class="lastupdate">时间：<span></span></div>
+            <div class="surplusmoney">余额：<span></span></div>
+          </div>
+          <button id="logout" class="button is-primary ant-btn">登出</button>
+      </div>
+      <div class="aboutAuthor showBlock">
+        <div class="closeBlock closeAutonor">
+          <i class="iconfont icon-guanbifuzhi"></i>
+        </div>
+        <div class="iconwrap">
+          <img src="./file/mineicon.png" alt="">
+        </div>
+        <div style="text-align: center;margin-top: 20px;">李春同学</div>
+        <div class="introduce">
+          <p><span class="ctitle">简介:</span><span class="ccontent">李春（Levi Lee）,中南大学软件学院13级03班,
+            现就职于广州CVTE</span></p>
+          <p  style="margin-top:12px"><span class="ctitle1">微博:</span> <span class="ccontent1">@李春同学</span></p>
+          <p><span class="ctitle1">QQ:</span><span class="ccontent1">1219571443</span></p>
+          <p><span class="ctitle1">邮箱:</span><span class="ccontent1">lichunwork@163.com</span></p>
+          <p><span class="ctitle1">github:</span><span class="ccontent1"> https://github.com/levi1994</span></p>
+        </div>
+      </div>
+      <div class="aboutCost showBlock">
+        <div class="closeBlock closeCost">
+          <i class="iconfont icon-guanbifuzhi"></i>
+        </div>
+          <div class="logo">
+            <div class="iconwrap">
+            <i class="iconfont icon-feiyong" style="color: #868686;
+    font-size: 42px;
+    margin-top: -6px;
+    margin-right: -4px;"></i>
+            </div>
+          </div>
+        <div style="text-align: center;margin-top: 20px;">费用信息</div>
+        <div class="introduce">
+          <p ><span class="ctitle">公网总流量:</span> <span class="ccontent">暂无数据</span></p>
+          <p><span class="ctitle">公网已用流量:</span><span class="ccontent">暂无数据</span></p>
+          <p><span class="ctitle">公网剩余流量:</span><span class="ccontent">暂无数据</span></p>
+          <p><span class="ctitle">内网已用流量:</span><span class="ccontent">暂无数据</span></p>
+          <p><span class="ctitle">账户余额:</span><span class="ccontent">暂无数据</span></p>
+        </div>
+      </div>
+    </div>
+      <div class="footer">
+        <div class="weibo">
+          <i class="iconfont icon-weibo"></i>
+        </div>
+        <div class="github">
+          <i class="iconfont icon-github"></i>
+        </div>
+      </div>
+    </div>
+    </div>
+  </body>
+  <script src="jquery.min.js"></script>
+  <script src="./ban.js"></script>
+  <script src="file/rsa.js"></script>
+  <script src="index.js"></script>
+</html>
