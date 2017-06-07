@@ -1,4 +1,4 @@
-# electron-quick-start
+# 数字小中南
 
 **Clone and run for a quick way to see Electron in action.**
 

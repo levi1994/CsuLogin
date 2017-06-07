@@ -1,22 +1,20 @@
 /**
  * 初始化界面上所有的事件
  */
-let showMessage = require('./util.js').showMessage;
-
-let sendLogin = require('./network.js').sendLogin;
-let sendLogout = require('./network.js').sendLogout;
-
-module.exports = function(){
-var http = require('http');
+let http = require('http');
 const electron = require('electron');
 const BrowserWindow = electron.remote.BrowserWindow;
+let remote = electron.remote;
+let session = electron.remote.session;
 
-var remote = electron.remote;
-var session = electron.remote.session;
+let showMessage = require('./util.js').showMessage;
+let sendLogin = require('./network.js').sendLogin;
+let sendLogout = require('./network.js').sendLogout;
+let initAddress  = require('./address.js');
 
-var loginStatus = false;
+module.exports = function(){
 
-$("#login").on("mousedown",function(){
+$("#login").on("mousedown", function(){
     var acco = $("#account").val();
     var pass = $("#password").val();
     let flag = valid(acco, pass);
@@ -24,14 +22,20 @@ $("#login").on("mousedown",function(){
         showMessage("warn","请输入账号密码");
         return false;
     }
-    if(!brasAddress || brasAddress == "null" || !userIntranetAddress || userIntranetAddress == "null") {
-        initAddress(function() {
-            sendLogin(acco, pass);
+    if(!window.brasAddress || window.brasAddress == "null" || !window.userIntranetAddress || window.userIntranetAddress == "null") {
+        // 再度尝试初始化地址
+        var promise = new Promise(initAddress).then(function(result) {
+            window.userIntranetAddress = result.userIntranetAddress;
+            window.brasAddress = result.brasAddress;
+            sLogin(acco, pass);
+        }).catch(function(e){
+            showMessage('error','网络错误');
         });
     } else {
         sendLogin(acco, pass);
     }
 });
+
 
 $("#logout").on("mousedown",function(){
     sendLogout();
@@ -47,8 +51,6 @@ function valid(account, password) {
     return true;
 }
 
-
-
 /**
  * 打开微博
  */
@@ -62,9 +64,9 @@ function showWeibo() {
  * 打开github
  */
 function showGithub() {
-    let win = new BrowserWindow({width: 800, height: 600,autoHideMenuBar: true})
+    let win = new BrowserWindow({width: 1080, height: 800,autoHideMenuBar: true})
     // Load a remote URL
-    win.loadURL('https://github.com/levi1994/');
+    win.loadURL('https://github.com/levi1994/CsuLogin');
 }
 
 /**
@@ -96,7 +98,7 @@ $(".t-aboutAuthor").click(function(){
     $(".aboutAuthor").addClass("show");
 });
 $(".t-cost").click(function(){
-    if(!loginStatus) {
+    if(!window.loginStatus) {
         showMessage("warn","请登录后再查询费用信息");
         return;
     }

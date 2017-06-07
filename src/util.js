@@ -51,6 +51,9 @@ util.resolveCostHtml = function(html) {
     var reg1 = /您的账户.*\d+(\.\d+)?/g;
     var reg2 = /您宽带账户.*\d+(\.\d+)?/g;
     var result = {};
+    if(!html.match(reg1)){
+        return;
+    }
     result.sum = resolveFloat(html.match(reg1)[0]);
     result.use = resolveFloat(html.match(reg1)[1]);
     result.surplus = resolveFloat(html.match(reg1)[2]);
@@ -63,6 +66,16 @@ util.resolveCostHtml = function(html) {
     $(".aboutCost").find(".ccontent").eq(4).text(result.surplusMoney + "元");
     console.log(result);
 }
+
+function isNull(value) {
+    if(!value || value === 'null') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+util.isNull = isNull;
 
 function resolveFloat(text) {
     let reg = /\d+(\.\d+)?/g;

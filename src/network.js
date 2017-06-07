@@ -4,6 +4,7 @@
 var http = require('http');
 let resolveCostHtml = require('./util.js').resolveCostHtml;
 let showMessage = require('./util.js').showMessage;
+var cookie;
 
 var obj = {};
 
@@ -11,35 +12,42 @@ var obj = {};
  * 发送登录请求
  */
 function sendLogin(acco, pass) {
-    var accountID = acco + '@zndx.inter';
-    var password = RSAUtils.encryptedString(publickey, encodeURIComponent(pass));
-    var params = `accountID=${accountID}&password=${password}&brasAddress=${brasAddress}&userIntranetAddress=${userIntranetAddress}`;
-    var options = {  
-        hostname: '61.137.86.87',  
-        port: 8080,  
-        path: '/portalNat444/AccessServices/login?'+params,  
-        method: 'GET',
-        headers: {  
-            "Content-Type": 'application/x-www-form-urlencoded',  
-            "Content-Length": 12,
-            "Referer": "http://61.137.86.87:8080/portalNat444/index.jsp",
-        } 
-    };
-    var req = http.request(options, function (res) {
-        res.setEncoding('utf8');
-        res.on('data', function (chunk) {  
-            console.log('BODY: ' + chunk);
-            var data = JSON.parse(chunk);
-            console.log(res);
-            // 获得Cookie
-            var setCookie = res.headers["set-cookie"][0];
-            cookie = setCookie.split(";")[0].split("=")[1];
-            loginStatus = true;
-            getCostInfo();
-            resoveLoginResult(chunk,acco,pass);
-        });  
+    return new Promise(function(resolve, reject){
+        var accountID = acco + '@zndx.inter';
+        var password = RSAUtils.encryptedString(publickey, encodeURIComponent(pass));
+        var params = `accountID=${accountID}&password=${password}&brasAddress=${brasAddress}&userIntranetAddress=${userIntranetAddress}`;
+        var options = {  
+            hostname: '61.137.86.87',  
+            port: 8080,  
+            path: '/portalNat444/AccessServices/login?'+params,  
+            method: 'GET',
+            headers: {  
+                "Content-Type": 'application/x-www-form-urlencoded',  
+                "Content-Length": 12,
+                "Referer": "http://61.137.86.87:8080/portalNat444/index.jsp",
+            } 
+        };
+        var req = http.request(options, function (res) {
+            res.setEncoding('utf8');
+            res.on('data', function (chunk) {  
+                console.log('BODY: ' + chunk);
+                var data = JSON.parse(chunk);
+                // 获得Cookie
+                var setCookie = res.headers["set-cookie"][0];
+                cookie = setCookie.split(";")[0].split("=")[1];
+                window.loginStatus = true;
+                getCostInfo();
+                resoveLoginResult(chunk,acco,pass);
+                resolve(data);
+            });  
+        });
+        req.end();
     });
-    req.end();
+}
+
+async function sLogin(acco, pass) {
+    const data = await sendLogin(acco, pass);
+    console.log("s:"+data);
 }
 
 /**
@@ -70,7 +78,7 @@ function sendLogout(callback) {
                     callback.call(this, chunk);
                 }
                 showMessage("success","登出成功");
-                loginStatus = false;
+                window.loginStatus = false;
             } else {
                 showMessage("登出错误");
             }
@@ -84,7 +92,7 @@ function sendLogout(callback) {
  */
 function getCostInfo() {
     // 如果尚未登录
-    if(!loginStatus) {
+    if(!window.loginStatus) {
         showMessage("warn","请先登陆再查询消费信息");
         return false;
     }
@@ -154,5 +162,6 @@ function resoveLoginResult(data,accountID,password) {
 
 obj.sendLogin = sendLogin;
 obj.sendLogout = sendLogout;
+obj.sLogin = sLogin;
 
 module.exports = obj;

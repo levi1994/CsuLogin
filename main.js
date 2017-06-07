@@ -25,10 +25,15 @@ function createWindow () {
     resizable: true,
     // backgroundColor: '#fff',
     titleBarStyle: "hidden",
+    webPreferences: {
+      devTools: true
+    },
     // transparent: true,
     maximizable: true,
     autoHideMenuBar: true,
-    height: 600})
+    height: 600
+  });
+  // mainWindow.webContents.openDevTools();
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
