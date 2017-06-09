@@ -10,6 +10,7 @@ let session = electron.remote.session;
 let showMessage = require('./util.js').showMessage;
 let sendLogin = require('./network.js').sendLogin;
 let sendLogout = require('./network.js').sendLogout;
+let sLogin = require('./network.js').sLogin;
 let initAddress  = require('./address.js');
 
 module.exports = function(){
