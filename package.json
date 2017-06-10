@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "packageLinux": "electron-packager ./ Login --out ./app --asar=true --electron-version 1.6.8 --platform=linux --overwrite --icon=./file/logo.ico --ignore=node_modules --ignore=app",
+    "packageLinux": "electron-packager ./ Login --out ./app --asar=true --electron-version 1.7.1 --platform=linux --overwrite --icon=./file/logo.ico --ignore=node_modules --ignore=app",
     "packageWin": "electron-packager ./ Login --out ./app --asar=true --electron-version 1.7.1 --platform=win32 --overwrite --icon=./file/logo.ico --ignore=node_modules --ignore=app",
     "packageDarwin": "electron-packager ./ Login --out ./app --asar=true  --electron-version 1.7.1 --platform=darwin --overwrite --icon=./file/electron.jpg",
     "pack": "build --dir",
